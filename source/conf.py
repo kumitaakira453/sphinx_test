@@ -15,6 +15,7 @@ author = "kumitaakira"
 
 extensions = [
     "sphinx_tabs.tabs",
+    "sphinx_copybutton",
 ]
 # ページ間でのtab状態のキープ
 sphinx_tabs_valid_builders = ["html"]

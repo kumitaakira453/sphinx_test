@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy Sphinx Document to Pages
+name: Deploy Sphinx Document to Branch
 
 on:
   # Runs on pushes targeting the default branch
@@ -24,9 +24,6 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,13 +46,13 @@ jobs:
       - name: Build Sphinx
         run: |
           poetry run make html
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          # Upload entire repository
-          path: "./build/html/"
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      - name: Push build to a separate branch
+        run: |
+          git config --local user.email "akira_kumita@demia.co.jp"  
+          git config --local user.name "kumitaakira453"          
+          git checkout -b gh-pages || git checkout gh-pages  # gh-pagesブランチに切り替え、新しい場合は作成
+          git rm -rf .                                      # 既存のファイルを削除
+          cp -r ./build/html/. ./                          # ビルドしたファイルをコピー
+          git add .                                         # 新しいファイルを追加
+          git commit -m "Deploy Sphinx documentation"      # コミット
+          git push -f origin gh-pages                       # gh-pagesブランチにプッシュ

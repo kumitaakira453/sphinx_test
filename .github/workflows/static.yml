@@ -48,7 +48,7 @@ jobs:
         run: poetry add sphinx_rtd_theme
       - name: Build Sphinx
         run: |
-          cd docs
+          cd source
           poetry run make dirhtml
       - name: Setup Pages
         uses: actions/configure-pages@v3

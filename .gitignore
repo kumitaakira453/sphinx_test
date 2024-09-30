@@ -26,6 +26,3 @@ dist/
 *.swo
 *.DS_Store
 *.log
-
-
-poetry.lock

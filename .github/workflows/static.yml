@@ -46,6 +46,8 @@ jobs:
       - name: Build Sphinx
         run: |
           poetry run make html
+      - name: Create .nojekyll file
+        run: echo "" > ./build/html/.nojekyll
       - name: Push build to a separate branch
         run: |
           git config --local user.email "akira_kumita@demia.co.jp"  
